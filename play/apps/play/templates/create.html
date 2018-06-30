@@ -8,7 +8,8 @@
         Create a Game
     </h2>
 
-    <form class="form-horizontal" id="CreateGameForm">
+    <form class="form-horizontal" id="CreateGameForm" method="POST">
+        {% csrf_token %}
 
         <div class="form-group card">
 
@@ -85,55 +86,4 @@
 
 </div>
 
-<script>
-    /**
-     * Serializes HTML form data to JSON.
-     * Based on Stack Overflow example here:
-     *   https://stackoverflow.com/questions/35936553/jquery-convert-html-form-to-json-in-a-correct-format
-     */
-    function serializeFormJSON(form) {
-        let o = {};
-        let a = form.serializeArray();
-
-        $.each(a, function() {
-            // If an item was already defined, consider it a list.
-            if (o[this.name] !== undefined) {
-                if (!o[this.name].push) {
-                    o[this.name] = [o[this.name]];
-                }
-
-                o[this.name].push(this.value || '');
-            }
-            else {
-                o[this.name] = this.value || '';
-            }
-        });
-
-        return o;
-    }
-
-    $("#CreateGameForm").submit((e) => {
-        e.preventDefault();
-
-        // Serialize board options as JSON
-        let gameOptions = serializeFormJSON($("#BoardOptions").children(":input"));
-
-        // Serialize snake options
-        let snakes = [];
-        $("div.snake-row").each((ind, ele) => {
-
-            let snake = {
-                "Name": $(ele).children("input[name='Snake.Name']").val(),
-                "URL":  $(ele).children("input[name='Snake.URL']").val()
-            };
-            if (snake.Name && snake.URL)
-                snakes.push(snake);
-
-        });
-        gameOptions.Snakes = snakes;
-
-        console.log(gameOptions);
-    });
-
-</script>
 {% endblock %}

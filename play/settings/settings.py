@@ -110,7 +110,7 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
 )
 
-ENGINE_URL = "http://localhost:3000"
+ENGINE_URL = "http://localhost:3005"
 
 SOCIAL_AUTH_GITHUB_KEY = get_env('GITHUB_CLIENT_ID')
 SOCIAL_AUTH_GITHUB_SECRET = get_env('GITHUB_CLIENT_SECRET')
