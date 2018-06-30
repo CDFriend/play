@@ -78,12 +78,28 @@
 
         <div class="form-group">
             <input class="btn btn-primary" type="submit" value="Create Game">
-            <input class="btn btn-link" type="button" value="Show" disabled>
+            <a class="btn btn-link disabled" role="button" id="ShowGameButton" href="#">
+                Show
+            </a>
         </div>
 
 
     </form>
 
 </div>
+
+<script>
+    $("#CreateGameForm").submit(function(e)
+    {
+
+        e.preventDefault()
+        $.post("/create/", $(this).serialize(), function(data)
+        {
+            $("#ShowGameButton").prop("href", data.href)
+            $("#ShowGameButton").removeClass("disabled")
+        })
+
+    })
+</script>
 
 {% endblock %}

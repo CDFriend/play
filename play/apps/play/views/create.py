@@ -1,3 +1,4 @@
+from django.http import JsonResponse
 from django.shortcuts import render
 
 from ..apis.engine import *
@@ -18,6 +19,9 @@ def create(request):
                                    food=req.get("Food"),
                                    snakes=snakes)
 
-        print(create_game(create_req).id)
+        game = create_game(create_req)
+        href = "%s/games/%s" % (settings.ENGINE_URL, game.id)
+
+        return JsonResponse({"id": game.id, "href": href})
 
     return render(request, 'create.html')
