@@ -2,6 +2,16 @@
 {% load play_extras %}
 
 {% block content %}
+<style>
+    span.hidden { display: none; }
+    span.error {
+        padding-left: 2px;
+        color: red;
+        font-size: small;
+        font-style: italic;
+    }
+</style>
+
 <div class="container">
 
     <h2 class="py-3">
@@ -78,9 +88,12 @@
 
         <div class="form-group">
             <input class="btn btn-primary" type="submit" value="Create Game">
+
             <a class="btn btn-link disabled" role="button" id="ShowGameButton" href="#">
                 Show
             </a>
+
+            <span id="Error" class="align-middle error hidden"></span>
         </div>
 
 
@@ -93,10 +106,17 @@
     {
 
         e.preventDefault()
+
+        $("#Error").addClass("hidden")
+
         $.post("/create/", $(this).serialize(), function(data)
         {
             $("#ShowGameButton").prop("href", data.href)
             $("#ShowGameButton").removeClass("disabled")
+        }).fail(function(resp)
+        {
+            $("#Error").html("Error: " + resp.responseJSON.error)
+            $("#Error").removeClass("hidden")
         })
 
     })
